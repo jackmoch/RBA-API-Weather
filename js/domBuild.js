@@ -37,22 +37,25 @@ function outputConditions(conditions) {
 }
 
 function outputForecast(forecastArray, length) {
-  console.log("", forecastArray, length);
+  $('#output').empty();
   let $forecastWrapper = $("<div>", {
     id: "forecast-wrapper"
   });
   for (let i = 0; i < length; i++) {
-    console.log("test", forecastArray[i]);
     let currentForecast = forecastArray[i],
       $forecastListItem = $("<li>", {
-        class: "forecast-list__item"
+        class: currentForecast.date.monthname + currentForecast.date.day
       }),
       $date = $("<span/>", {
         class: "forecast-date"
-      }).text(currentForecast.date.weekday),
+      }).text(currentForecast.date.monthname + " " + currentForecast.date.day),
       $forecastListData = $("<ul/>", {
         class: "forecast-list__item--data"
-      });
+      }),
+      $forcastSaveBtn = $("<button>", {
+        id: currentForecast.date.monthname + currentForecast.date.day + "Btn",
+        class: "saveBtn"
+      }).text("Save " + currentForecast.date.monthname + " " + currentForecast.date.day + " Forecast");
 
     $forecastListData.append(`
           <li>${currentForecast.high.fahrenheit}</li>
@@ -60,7 +63,7 @@ function outputForecast(forecastArray, length) {
           <li><img src="${currentForecast.icon_url}"></li>
           <li>${currentForecast.conditions}</li>
           `);
-    $forecastWrapper.append($forecastListItem.append($date).append($forecastListData));
+    $forecastWrapper.append($forecastListItem.append($date).append($forecastListData).append($forcastSaveBtn));
   }
   if (length === 1) {
     let $threeDayForeCastBtn = $("<button>", {

@@ -71,9 +71,7 @@ $(document).on('click', '#oneDayBtn', function() {
   getWeather.getForecast(zip)
     .then(function(forecast) {
       let forecastArray = forecast.forecast.simpleforecast.forecastday;
-      // console.log("", templates);
       templates.outputForecast(forecastArray, 1);
-      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
     });
 });
 
@@ -81,9 +79,7 @@ $(document).on('click', '#threeDayBtn', function() {
   getWeather.getForecast(zip)
     .then(function(forecast) {
       let forecastArray = forecast.forecast.simpleforecast.forecastday;
-      // console.log("", templates);
       templates.outputForecast(forecastArray, 3);
-      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
     });
 });
 
@@ -91,8 +87,10 @@ $(document).on('click', '#tenDayBtn', function() {
   getWeather.getForecast(zip)
     .then(function(forecast) {
       let forecastArray = forecast.forecast.simpleforecast.forecastday;
-      // console.log("", templates);
       templates.outputForecast(forecastArray, 10);
-      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
     });
 });
+
+$(document).on('click', '.saveBtn', function() {
+  console.log("", $(this));
+})
