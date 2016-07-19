@@ -2,14 +2,26 @@
 
 let $ = require('jquery');
 
-function getWeather(zip) {
+function getConditions(zip) {
   return new Promise(function(resolve, reject) {
     $.ajax({
-      url: `http://api.wunderground.com/api/cadf2ec036697adc/forecast/q/${zip}.json`
-    }).done(function(forecast) {
-      resolve(forecast.forecast.txt_forecast.forecastday);
+      url: `http://api.wunderground.com/api/cadf2ec036697adc/conditions/q/${zip}.json`
+    }).done(function(conditions) {
+      resolve(conditions.current_observation);
     })
   })
 }
 
-module.exports = getWeather;
+function getForecast(zip) {
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: `http://api.wunderground.com/api/cadf2ec036697adc/forecast10day/q/${zip}.json`
+    }).done(function(forecast) {
+      resolve(forecast);
+    })
+  })
+}
+
+module.exports = {
+  getConditions, getForecast
+};

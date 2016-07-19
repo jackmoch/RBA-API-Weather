@@ -4,7 +4,8 @@ let $ = require('jquery'),
   login = require("./user"),
   currentUser = require("./currentUser"),
   templates = require("./domBuild"),
-  getWeather = require("./getWeather");
+  getWeather = require("./getWeather"),
+  zip = null;
 
 $("#auth-btn").click(function() {
   let user;
@@ -27,13 +28,13 @@ $("#auth-btn").click(function() {
 });
 
 $(document).on('click', '#submit-btn', function() {
-  let zip = $('#input').val();
+  zip = $('#input').val();
   validateZip(zip)
     .then(function(data) {
       if (data) {
-        getWeather(zip)
-          .then(function(forecast) {
-            templates.outputForecast(forecast);
+        getWeather.getConditions(zip)
+          .then(function(conditions) {
+            templates.outputConditions(conditions);
           });
       } else {
         alert('Please use 5 digit zip');
@@ -42,21 +43,21 @@ $(document).on('click', '#submit-btn', function() {
 });
 
 $(document).on('keypress', '#input', (function(e) {
-  let key = e.which,
-    zip = $('#input').val();
+  let key = e.which;
+  zip = $('#input').val();
   if (key == 13) // the enter key code
   {
     validateZip(zip)
       .then(function(data) {
         if (data) {
-          getWeather(zip)
-            .then(function(forecast) {
-              templates.outputForecast(forecast);
+          getWeather.getConditions(zip)
+            .then(function(conditions) {
+              templates.outputConditions(conditions);
             });
         } else {
           alert('Please use 5 digit zip');
         }
-      });;
+      });
   }
 }));
 
@@ -65,3 +66,33 @@ function validateZip(zip) {
     resolve(/^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/.test(zip));
   });
 }
+
+$(document).on('click', '#oneDayBtn', function() {
+  getWeather.getForecast(zip)
+    .then(function(forecast) {
+      let forecastArray = forecast.forecast.simpleforecast.forecastday;
+      // console.log("", templates);
+      templates.outputForecast(forecastArray, 1);
+      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
+    });
+});
+
+$(document).on('click', '#threeDayBtn', function() {
+  getWeather.getForecast(zip)
+    .then(function(forecast) {
+      let forecastArray = forecast.forecast.simpleforecast.forecastday;
+      // console.log("", templates);
+      templates.outputForecast(forecastArray, 3);
+      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
+    });
+});
+
+$(document).on('click', '#tenDayBtn', function() {
+  getWeather.getForecast(zip)
+    .then(function(forecast) {
+      let forecastArray = forecast.forecast.simpleforecast.forecastday;
+      // console.log("", templates);
+      templates.outputForecast(forecastArray, 10);
+      // console.log("ten day array", forecast.forecast.simpleforecast.forecastday);
+    });
+});
