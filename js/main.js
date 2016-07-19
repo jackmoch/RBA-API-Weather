@@ -5,7 +5,8 @@ let $ = require('jquery'),
   currentUser = require("./currentUser"),
   templates = require("./domBuild"),
   getWeather = require("./getWeather"),
-  zip = null;
+  zip = null,
+  save = require("./saveForecast");
 
 $("#auth-btn").click(function() {
   let user;
@@ -92,5 +93,10 @@ $(document).on('click', '#tenDayBtn', function() {
 });
 
 $(document).on('click', '.saveBtn', function() {
-  console.log("", $(this));
+  let day = $(this)[0].id;
+  getWeather.getForecast(zip)
+    .then(function(forecast) {
+      let forecastArray = forecast.forecast.simpleforecast.forecastday;
+      save(forecastArray, day)
+    });
 })

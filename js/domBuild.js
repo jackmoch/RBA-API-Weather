@@ -53,7 +53,7 @@ function outputForecast(forecastArray, length) {
         class: "forecast-list__item--data"
       }),
       $forcastSaveBtn = $("<button>", {
-        id: currentForecast.date.monthname + currentForecast.date.day + "Btn",
+        id: currentForecast.date.monthname + currentForecast.date.day,
         class: "saveBtn"
       }).text("Save " + currentForecast.date.monthname + " " + currentForecast.date.day + " Forecast");
 
