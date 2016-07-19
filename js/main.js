@@ -15,6 +15,7 @@ $("#auth-btn").click(function() {
       user = result.user;
       currentUser.setUser(user.uid);
       templates.domBuild();
+      $('#view-saved').attr('hidden', false);
     })
     .catch(function(error) {
       // Handle Errors here.
