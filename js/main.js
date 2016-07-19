@@ -6,7 +6,7 @@ let $ = require('jquery'),
   templates = require("./domBuild"),
   getWeather = require("./getWeather"),
   zip = null,
-  save = require("./saveForecast");
+  save = require("./saveForecastObject");
 
 $("#auth-btn").click(function() {
   let user;
@@ -97,6 +97,6 @@ $(document).on('click', '.saveBtn', function() {
   getWeather.getForecast(zip)
     .then(function(forecast) {
       let forecastArray = forecast.forecast.simpleforecast.forecastday;
-      save(forecastArray, day)
+      save(forecastArray, day);
     });
-})
+});

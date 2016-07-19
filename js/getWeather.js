@@ -8,8 +8,8 @@ function getConditions(zip) {
       url: `http://api.wunderground.com/api/cadf2ec036697adc/conditions/q/${zip}.json`
     }).done(function(conditions) {
       resolve(conditions.current_observation);
-    })
-  })
+    });
+  });
 }
 
 function getForecast(zip) {
@@ -18,8 +18,8 @@ function getForecast(zip) {
       url: `http://api.wunderground.com/api/cadf2ec036697adc/forecast10day/q/${zip}.json`
     }).done(function(forecast) {
       resolve(forecast);
-    })
-  })
+    });
+  });
 }
 
 module.exports = {
