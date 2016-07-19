@@ -3,7 +3,8 @@
 let $ = require('jquery'),
   login = require("./user"),
   currentUser = require("./currentUser"),
-  templates = require("./domBuild");
+  templates = require("./domBuild"),
+  getWeather = require("./getWeather");
 
 $("#auth-btn").click(function() {
   let user;
@@ -25,31 +26,33 @@ $("#auth-btn").click(function() {
     });
 });
 
-$(document).on('click', '#submit-btn', function() {
-  validateZip($('#input').val())
-    .then(function(data) {
-      if (data) {
-        //run next function
-      } else {
-        alert('Please use 5 digit zip');
-      }
-    });
-});
+// $(document).on('click', '#submit-btn', function() {
+//   let zip = $('#input').val();
+//   validateZip(zip)
+//     .then(function(data) {
+//       if (data) {
+//         getWeather(zip);
+//       } else {
+//         alert('Please use 5 digit zip');
+//       }
+//     });
+// });
 
-$(document).on('keypress', '#input', (function(e) {
-  var key = e.which;
-  if (key == 13) // the enter key code
-  {
-    validateZip($('#input').val())
-      .then(function(data) {
-        if (data) {
-          //run next function
-        } else {
-          alert('Please use 5 digit zip');
-        }
-      });;
-  }
-}));
+// $(document).on('keypress', '#input', (function(e) {
+//   let key = e.which,
+//     let zip = $('#input').val();
+//   if (key == 13) // the enter key code
+//   {
+//     validateZip(zip)
+//       .then(function(data) {
+//         if (data) {
+//           getWeather(zip)
+//         } else {
+//           alert('Please use 5 digit zip');
+//         }
+//       });;
+//   }
+// }));
 
 function validateZip(zip) {
   console.log("test");
