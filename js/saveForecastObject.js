@@ -13,6 +13,8 @@ function saveForecastObject(forecastArray, day) {
         low: currentForecast.low.fahrenheit,
         conditionsIcon: currentForecast.icon_url,
         conditions: currentForecast.conditions,
+        month: currentForecast.date.monthname,
+        day: currentForecast.date.day,
         uid: user
       };
       dbSave(savedForecast)

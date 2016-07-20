@@ -1,8 +1,11 @@
 "use strict";
 
-let $ = require('jquery');
+let $ = require('jquery'),
+  currentUser = require("./currentUser"),
+  getSaved = require("./getSaved");
 
 function domBuild() {
+  $('#output').empty();
   let $initialDisplay =
     $(`
       <div>
@@ -13,6 +16,7 @@ function domBuild() {
 }
 
 function outputConditions(conditions) {
+  $('#output').empty();
   let $conditionsListItem = $("<li>", {
       class: "conditions-list__item"
     }),
@@ -58,10 +62,10 @@ function outputForecast(forecastArray, length) {
       }).text("Save " + currentForecast.date.monthname + " " + currentForecast.date.day + " Forecast");
 
     $forecastListData.append(`
-          <li>${currentForecast.high.fahrenheit}</li>
-          <li>${currentForecast.low.fahrenheit}</li>
+          <li>High Temp: ${currentForecast.high.fahrenheit}</li>
+          <li>Low Temp: ${currentForecast.low.fahrenheit}</li>
           <li><img src="${currentForecast.icon_url}"></li>
-          <li>${currentForecast.conditions}</li>
+          <li>Conditions: ${currentForecast.conditions}</li>
           `);
     $forecastWrapper.append($forecastListItem.append($date).append($forecastListData).append($forcastSaveBtn));
   }
@@ -80,6 +84,39 @@ function outputForecast(forecastArray, length) {
   }
 }
 
+function outputFavorites() {
+  let user = currentUser.getUser();
+  let $savedWrapper = $("<div>", {
+    id: "saved-wrapper"
+  });
+  getSaved(user)
+    .then(function(forecastObject) {
+      $('#output').empty();
+      for (let forecast in forecastObject) {
+        console.log("", currentForecast);
+        let currentForecast = forecastObject[forecast],
+          $forecastListItem = $("<li>"),
+          $date = $("<span/>", {
+            class: "forecast-date"
+          }).text(currentForecast.month + " " + currentForecast.day),
+          $forecastListData = $("<ul/>"),
+          $forecastDeleteBtn = $("<button>", {
+            class: "deleteBtn",
+            id: currentForecast
+          }).text("Delete");
+
+        $forecastListData.append(`
+          <li>High Temp: ${currentForecast.high}</li>
+          <li>Low Temp: ${currentForecast.low}</li>
+          <li><img src="${currentForecast.conditionsIcon}"></li>
+          <li>Forecast: ${currentForecast.conditions}</li>
+          `);
+        $savedWrapper.append($forecastListItem.append($date).append($forecastListData).append($forecastDeleteBtn));
+      }
+      $('#output').append($savedWrapper);
+    });
+}
+
 module.exports = {
-  domBuild, outputConditions, outputForecast
+  domBuild, outputConditions, outputForecast, outputFavorites
 };
