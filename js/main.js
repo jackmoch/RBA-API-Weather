@@ -6,7 +6,8 @@ let $ = require('jquery'),
   templates = require("./domBuild"),
   getWeather = require("./getWeather"),
   zip = null,
-  save = require("./saveForecastObject");
+  save = require("./saveForecastObject"),
+  dbDelete = require('./dbDeleteForecast');
 
 $("#auth-btn").click(function() {
   let user;
@@ -107,5 +108,6 @@ $(document).on('click', '#view-saved', function() {
 });
 
 $(document).on('click', '.deleteBtn', function() {
-  console.log("", $(this));
+  let forecastId = $(this).attr('id');
+  dbDelete(forecastId);
 });
