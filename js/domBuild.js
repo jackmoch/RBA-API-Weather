@@ -93,7 +93,6 @@ function outputFavorites() {
     .then(function(forecastObject) {
       $('#output').empty();
       for (let forecast in forecastObject) {
-        console.log("", currentForecast);
         let currentForecast = forecastObject[forecast],
           $forecastListItem = $("<li>"),
           $date = $("<span/>", {
@@ -102,7 +101,7 @@ function outputFavorites() {
           $forecastListData = $("<ul/>"),
           $forecastDeleteBtn = $("<button>", {
             class: "deleteBtn",
-            id: currentForecast
+            id: forecast
           }).text("Delete");
 
         $forecastListData.append(`
