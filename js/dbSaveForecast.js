@@ -15,6 +15,6 @@ function saveForecast(forecastObject) {
       resolve(test);
     });
   });
-}
+};
 
 module.exports = saveForecast;

@@ -101,3 +101,11 @@ $(document).on('click', '.saveBtn', function() {
       save(forecastArray, day);
     });
 });
+
+$(document).on('click', '#view-saved', function() {
+  templates.outputFavorites();
+});
+
+$(document).on('click', '.deleteBtn', function() {
+  console.log("", $(this));
+});
